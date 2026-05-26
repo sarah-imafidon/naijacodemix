@@ -1,5 +1,15 @@
 import streamlit as st
+import sys
+from pathlib import Path
 from datetime import datetime
+
+# Add frontend/ to path so components can be found on Streamlit Cloud
+FRONTEND_DIR = Path(__file__).parent.parent
+sys.path.append(str(FRONTEND_DIR))
+
+# Add project root to path so backend can be found
+ROOT_DIR = FRONTEND_DIR.parent
+sys.path.append(str(ROOT_DIR))
 
 from components.explanation import explain_prediction
 from backend.predict import predict
