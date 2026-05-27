@@ -3,10 +3,12 @@ pandas
 openpyxl
 torch
 torchvision
-transformers==4.40.0
+transformers>=4.44.0
+tokenizers>=0.20.0
 scikit-learn
 numpy
 joblib
 gdown
 sentencepiece
 protobuf
+accelerate
