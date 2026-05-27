@@ -2,8 +2,11 @@ streamlit
 pandas
 openpyxl
 torch
-transformers
+torchvision
+transformers==4.40.0
 scikit-learn
 numpy
 joblib
 gdown
+sentencepiece
+protobuf
