@@ -28,11 +28,8 @@ def _download_file(file_id: str, dest: Path):
     """Download a single file from Google Drive using gdown."""
     import gdown
     print(f"Downloading {dest.name} from Google Drive...")
-    gdown.download(
-        f"https://drive.google.com/uc?id={file_id}",
-        str(dest),
-        quiet=False
-    )
+    url = f"https://drive.google.com/uc?id={file_id}&confirm=t"
+    gdown.download(url, str(dest), quiet=False, fuzzy=True)
     print(f"✅ {dest.name} downloaded.")
 
 
