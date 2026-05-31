@@ -2,12 +2,12 @@ import streamlit as st
 import sys
 from pathlib import Path
 
-# app.py lives at: project_root/frontend/app.py
+# app.py lives at: project_root/app.py
 # So:
-#   Path(__file__).parent       = project_root/frontend/
-#   Path(__file__).parent.parent = project_root/
-FRONTEND_DIR = Path(__file__).parent
-ROOT_DIR     = FRONTEND_DIR.parent
+#   Path(__file__).parent       = project_root/
+#   Path(__file__).parent / "frontend" = project_root/frontend/
+ROOT_DIR     = Path(__file__).parent
+FRONTEND_DIR = ROOT_DIR / "frontend"
 
 # Add both to path so all imports work
 sys.path.append(str(ROOT_DIR))
