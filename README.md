@@ -1,6 +1,6 @@
 ---
 title: NaijaCodeMix Detector
-emoji: 🇳🇬
+emoji: 📊
 colorFrom: red
 colorTo: indigo
 sdk: streamlit
