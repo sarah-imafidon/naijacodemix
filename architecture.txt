@@ -1,0 +1,13 @@
+Tweet
+   ↓
+Preprocessing
+   ↓
+Linguistic Feature Extraction
+   ↓
+AfroXLM-R Transformer Encoding
+   ↓
+Feature Fusion (combine both)
+   ↓
+Classifier
+   ↓
+Code-mix prediction

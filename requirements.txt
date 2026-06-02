@@ -1,0 +1,12 @@
+streamlit
+torch
+transformers
+safetensors
+pandas
+numpy
+scikit-learn
+joblib
+gdown
+datasets
+sentencepiece
+protobuf

@@ -1,0 +1,1123 @@
+/* =========================================================
+   GOOGLE FONTS
+========================================================= */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Serif:wght@400;600&display=swap");
+
+/* =========================================================
+   ROOT VARIABLES
+========================================================= */
+:root {
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+
+  /* Sidebar — deep red palette */
+  --sidebar-bg: #c0392b;
+  --sidebar-dark: #a93226;
+  --sidebar-text: rgba(255, 255, 255, 0.88);
+  --sidebar-border: rgba(255, 255, 255, 0.12);
+  --sidebar-highlight: rgba(255, 255, 255, 0.08);
+
+  /* Cream/ivory contrast — mirrors main app background */
+  --cream: #f7f5f0;
+  --cream-dim: #ede9e1;
+  --cream-text: #2a1a18;
+
+  --border: #ddd8cc;
+  --border-dark: #c5bfb0;
+
+  --accent: #c0392b;
+  --accent-soft: #fdf0ee;
+
+  --accent2: #1a5276;
+  --accent2-soft: #eaf2f8;
+
+  --pidgin: #6c3483;
+  --pidgin-soft: #f5eef8;
+
+  --english: #1e8449;
+  --english-soft: #eafaf1;
+
+  --text: #1a1a1a;
+  --text-mid: #4a4a4a;
+  --muted: #8a8a8a;
+
+  --mono: "IBM Plex Mono", monospace;
+  --sans: "IBM Plex Sans", sans-serif;
+  --serif: "IBM Plex Serif", serif;
+}
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+html,
+body,
+[data-testid="stAppViewContainer"] {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+  font-family: var(--sans) !important;
+}
+
+#MainMenu {
+  visibility: hidden;
+}
+footer {
+  visibility: hidden;
+}
+
+/* =========================================================
+   FIX 1 — Streamlit top bar: match page background, no white block
+========================================================= */
+[data-testid="stHeader"] {
+  background-color: var(--bg) !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
+/* Deploy button and toolbar icons inherit page colour */
+[data-testid="stToolbar"] {
+  background-color: var(--bg) !important;
+}
+
+/* Push the main content block up so the header gap isn't huge */
+[data-testid="stAppViewContainer"] > section:first-of-type {
+  padding-top: 2rem !important;
+}
+
+/* =========================================================
+   FIX 2 — Top-right Sign In / account button
+   Injected via st.markdown in app.py — styled to match sidebar
+========================================================= */
+.topbar-auth {
+  position: fixed;
+  top: 0.6rem;
+  right: 1.25rem;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.topbar-btn {
+  display: inline-block;
+  background: var(--sidebar-bg);
+  color: #ffffff !important;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.topbar-btn:hover {
+  background: var(--sidebar-dark);
+}
+
+.topbar-user {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-mid);
+  letter-spacing: 0.5px;
+}
+
+/* =========================================================
+   TOP-RIGHT SIGN IN BUTTON — matches sidebar red
+========================================================= */
+div[data-testid="column"]:last-child .stButton > button {
+  background: var(--sidebar-bg) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 3px !important;
+  font-family: var(--mono) !important;
+  font-size: 0.72rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  padding: 0.4rem 1rem !important;
+  min-width: unset !important;
+  width: 100% !important;
+  transition: background 0.15s !important;
+}
+
+div[data-testid="column"]:last-child .stButton > button:hover {
+  background: var(--sidebar-dark) !important;
+  opacity: 1 !important;
+}
+
+/* =========================================================
+   SIDEBAR COLLAPSE / EXPAND ARROW — large, cream, unmissable
+========================================================= */
+[data-testid="stSidebarCollapseButton"] {
+  background-color: var(--sidebar-dark) !important;
+  border-radius: 0 6px 6px 0 !important;
+  width: 2.2rem !important;
+  height: 3rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 2px solid rgba(247, 245, 240, 0.3) !important;
+  border-left: none !important;
+  transition: background 0.15s !important;
+}
+
+[data-testid="stSidebarCollapseButton"]:hover {
+  background-color: var(--accent) !important;
+}
+
+[data-testid="stSidebarCollapseButton"] svg {
+  width: 1.4rem !important;
+  height: 1.4rem !important;
+  stroke: var(--cream) !important;
+  stroke-width: 3 !important;
+  fill: none !important;
+}
+
+[data-testid="stSidebarCollapseButton"] button {
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--cream) !important;
+}
+
+/* =========================================================
+   SIDEBAR EXPAND BUTTON — outside when sidebar is collapsed
+   Targets every known Streamlit selector variation
+========================================================= */
+[data-testid="stSidebarExpandButton"],
+[data-testid="stSidebarExpandButton"] > button,
+[data-testid="stSidebarExpandButton"] button,
+[data-testid="collapsedControl"],
+[data-testid="collapsedControl"] > button,
+[data-testid="collapsedControl"] button,
+section[data-testid="stSidebarExpandButton"],
+div[data-testid="stSidebarExpandButton"] {
+  background-color: var(--sidebar-bg) !important;
+  border-radius: 0 8px 8px 0 !important;
+  width: 2.4rem !important;
+  height: 3.2rem !important;
+  min-height: 3.2rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 2px solid rgba(247, 245, 240, 0.4) !important;
+  border-left: none !important;
+  box-shadow: 4px 0 12px rgba(192, 57, 43, 0.4) !important;
+  transition: background 0.15s !important;
+  cursor: pointer !important;
+}
+
+[data-testid="stSidebarExpandButton"]:hover,
+[data-testid="stSidebarExpandButton"] > button:hover,
+[data-testid="collapsedControl"]:hover,
+[data-testid="collapsedControl"] > button:hover {
+  background-color: var(--sidebar-dark) !important;
+}
+
+[data-testid="stSidebarExpandButton"] svg,
+[data-testid="collapsedControl"] svg {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  stroke: var(--cream) !important;
+  stroke-width: 3.5 !important;
+  fill: none !important;
+  color: var(--cream) !important;
+}
+
+/* Also target via aria label as fallback */
+button[aria-label="Open sidebar"],
+button[aria-label="open sidebar"],
+button[title="Open sidebar"] {
+  background-color: var(--sidebar-bg) !important;
+  border-radius: 0 8px 8px 0 !important;
+  width: 2.4rem !important;
+  height: 3.2rem !important;
+  border: 2px solid rgba(247, 245, 240, 0.4) !important;
+  border-left: none !important;
+  box-shadow: 4px 0 12px rgba(192, 57, 43, 0.4) !important;
+  color: var(--cream) !important;
+}
+
+button[aria-label="Open sidebar"] svg,
+button[aria-label="open sidebar"] svg,
+button[title="Open sidebar"] svg {
+  stroke: var(--cream) !important;
+  stroke-width: 3.5 !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
+
+/* =========================================================
+   SIDEBAR — deep red
+========================================================= */
+[data-testid="stSidebar"] {
+  background-color: var(--sidebar-bg) !important;
+  border-right: none !important;
+}
+
+/* Colour sidebar text elements individually — no wildcard */
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] span,
+[data-testid="stSidebar"] div,
+[data-testid="stSidebar"] label {
+  color: var(--sidebar-text);
+}
+
+/* =========================================================
+   SIDEBAR BRAND
+========================================================= */
+.sidebar-brand {
+  padding: 2rem 0 1.5rem;
+  border-bottom: 1px solid var(--sidebar-border);
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-brand .eyebrow {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.sidebar-brand h2 {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.3rem;
+  line-height: 1.2;
+}
+
+.sidebar-brand p {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   SIDEBAR SECTION LABEL
+========================================================= */
+.sidebar-section {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cream-dim); /* cream label text */
+  padding: 1.2rem 0 0.5rem;
+  margin-bottom: 0.25rem;
+  border-top: 1px solid var(--cream-dim); /* cream divider line */
+  opacity: 0.55;
+  display: block;
+}
+
+/* =========================================================
+   SIDEBAR NAV BUTTONS — inactive
+========================================================= */
+[data-testid="stSidebar"] .stButton > button {
+  background: rgba(
+    255,
+    255,
+    255,
+    0.07
+  ) !important; /* subtle fill so buttons are visible */
+  color: rgba(255, 255, 255, 0.9) !important; /* near-white text */
+
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 4px !important;
+
+  font-family: var(--mono) !important;
+  font-size: 0.82rem !important; /* slightly larger */
+  font-weight: 500 !important; /* medium weight */
+  letter-spacing: 0.5px !important;
+
+  padding: 0.6rem 0.75rem !important; /* taller hit area */
+  width: 100% !important;
+  text-align: left !important;
+  margin-bottom: 3px !important;
+
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s !important;
+}
+
+[data-testid="stSidebar"] .stButton > button:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* =========================================================
+   SIDEBAR NAV BUTTONS — active (.nav-active wrapper)
+   Cream/ivory background = strong contrast against the red
+========================================================= */
+.nav-active .stButton > button {
+  background: var(--cream) !important; /* cream fill */
+  color: var(--cream-text) !important; /* dark warm brown text */
+  border-color: var(--cream-dim) !important;
+  font-weight: 600 !important;
+}
+
+.nav-active .stButton > button:hover {
+  background: var(--cream-dim) !important;
+  color: var(--cream-text) !important;
+}
+
+/* =========================================================
+   SIDEBAR SYSTEM STATUS
+========================================================= */
+.sidebar-status {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  line-height: 2.2;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* =========================================================
+   LOGIN PAGE — tab buttons identical size, and form button full width
+========================================================= */
+
+/* Both Sign In and Create Account tab toggle buttons — same size */
+[data-testid="stAppViewContainer"] [data-testid="column"] .stButton > button {
+  padding: 0.6rem 1rem !important;
+  min-width: unset !important;
+  width: 100% !important;
+  font-size: 0.78rem !important;
+}
+
+/* =========================================================
+   MAIN CONTENT BUTTONS
+========================================================= */
+[data-testid="stAppViewContainer"] .stButton > button {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 3px !important;
+  font-family: var(--mono) !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  padding: 0.75rem 2.5rem !important; /* more vertical + horizontal room */
+  min-width: 160px !important; /* never gets squashed narrow */
+  transition: opacity 0.15s !important;
+}
+
+[data-testid="stAppViewContainer"] .stButton > button:hover {
+  opacity: 0.85 !important;
+}
+
+/* =========================================================
+   DOWNLOAD BUTTON
+========================================================= */
+[data-testid="stDownloadButton"] > button {
+  background: transparent !important;
+  color: var(--accent) !important;
+  border: 1px solid var(--accent) !important;
+  border-radius: 3px !important;
+  font-family: var(--mono) !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  padding: 0.5rem 1.25rem !important;
+  transition: background 0.15s !important;
+}
+
+[data-testid="stDownloadButton"] > button:hover {
+  background: var(--accent-soft) !important;
+}
+
+/* =========================================================
+   TEXT INPUTS
+========================================================= */
+.stTextInput input {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-dark) !important;
+  border-radius: 3px !important;
+  color: var(--text) !important;
+  font-family: var(--sans) !important;
+  font-size: 0.9rem !important;
+  padding: 0.6rem 0.9rem !important;
+  transition: border-color 0.15s !important;
+}
+
+.stTextInput input:focus {
+  border-color: var(--accent) !important;
+  box-shadow: none !important;
+}
+
+.stTextInput label {
+  font-family: var(--mono) !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  color: var(--muted) !important;
+}
+
+/* =========================================================
+   TEXT AREA
+========================================================= */
+.stTextArea textarea {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-dark) !important;
+  border-radius: 3px !important;
+  color: var(--text) !important;
+  font-family: var(--sans) !important;
+  font-size: 0.95rem !important;
+  padding: 1rem !important;
+  line-height: 1.6 !important;
+  transition: border-color 0.15s !important;
+}
+
+.stTextArea textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: none !important;
+}
+
+.stTextArea label {
+  font-family: var(--mono) !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  color: var(--muted) !important;
+}
+
+/* =========================================================
+   SELECT BOX
+========================================================= */
+.stSelectbox label {
+  font-family: var(--mono) !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  color: var(--muted) !important;
+}
+
+/* =========================================================
+   FILE UPLOADER
+========================================================= */
+[data-testid="stFileUploader"] {
+  background: var(--surface) !important;
+  border: 1px dashed var(--border-dark) !important;
+  border-radius: 3px !important;
+  padding: 0.5rem !important;
+}
+
+[data-testid="stFileUploader"] label {
+  font-family: var(--mono) !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  color: var(--muted) !important;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+.page-header {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 2px solid var(--text);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.page-header .eyebrow {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.page-header h1 {
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 0.6rem;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.page-header p {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  margin: 0 auto;
+  max-width: 560px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* =========================================================
+   SECTION RULE
+========================================================= */
+.section-rule {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0 1.5rem;
+}
+
+.section-rule-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.section-rule-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.card-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+/* =========================================================
+   ABOUT CARD
+========================================================= */
+.about-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.about-card h3 {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.about-card ul {
+  margin: 0;
+  padding-left: 1rem;
+  color: var(--text-mid);
+  font-size: 0.88rem;
+  line-height: 2;
+}
+
+.about-card li::marker {
+  color: var(--accent);
+}
+
+/* =========================================================
+   PREDICTION VERDICT
+========================================================= */
+.prediction-verdict {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.verdict-codemixed {
+  color: var(--accent);
+}
+.verdict-english {
+  color: var(--accent2);
+}
+
+/* =========================================================
+   CONFIDENCE BAR
+========================================================= */
+.conf-wrap {
+  margin-bottom: 1rem;
+}
+
+.conf-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.conf-name {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.conf-pct {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.conf-track {
+  background: var(--border);
+  border-radius: 1px;
+  height: 4px;
+  overflow: hidden;
+}
+
+.conf-fill-red {
+  background: var(--accent);
+  height: 100%;
+  border-radius: 1px;
+}
+.conf-fill-blue {
+  background: var(--accent2);
+  height: 100%;
+  border-radius: 1px;
+}
+
+/* =========================================================
+   AGREEMENT BOX
+========================================================= */
+.agreement-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 3px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+
+.agreement-box.agree {
+  border-left-color: var(--english);
+}
+.agreement-box.disagree {
+  border-left-color: var(--accent);
+}
+
+/* =========================================================
+   METRICS ROW
+========================================================= */
+.metric-row {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.metric-cell {
+  flex: 1;
+  padding: 1.2rem;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  text-align: center;
+}
+
+.metric-cell:last-child {
+  border-right: none;
+}
+
+.metric-val {
+  font-family: var(--mono);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.metric-val.highlight {
+  color: var(--accent);
+}
+
+.metric-lbl {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* =========================================================
+   TOKEN LEGEND
+========================================================= */
+.token-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.dot-pidgin {
+  background: var(--pidgin);
+}
+.dot-english {
+  background: var(--english);
+}
+.dot-neutral {
+  background: var(--border-dark);
+}
+
+/* =========================================================
+   TOKENS
+========================================================= */
+.tokens-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  line-height: 2;
+}
+
+.token {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+
+.token-pidgin {
+  background: var(--pidgin-soft);
+  color: var(--pidgin);
+  border-bottom: 2px solid var(--pidgin);
+}
+.token-english {
+  background: var(--english-soft);
+  color: var(--english);
+  border-bottom: 2px solid var(--english);
+}
+.token-neutral {
+  background: transparent;
+  color: var(--text-mid);
+  border-bottom: 2px solid transparent;
+}
+
+/* =========================================================
+   FINDINGS
+========================================================= */
+.finding {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.finding:last-child {
+  border-bottom: none;
+}
+
+.finding-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  padding-top: 2px;
+  flex-shrink: 0;
+  width: 24px;
+}
+
+.finding-text {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+
+.finding-text strong {
+  color: var(--text);
+}
+
+/* =========================================================
+   SENTENCE ROWS
+========================================================= */
+.sent-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.sent-num {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 1px;
+  margin-bottom: 0.35rem;
+}
+
+.sent-text-content {
+  font-size: 0.92rem;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+  line-height: 1.5;
+}
+
+.sent-pills {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* =========================================================
+   PILLS & BADGES
+========================================================= */
+.pill {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  padding: 2px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.5px;
+}
+
+.pill-cm {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid #f0c0bb;
+}
+.pill-eng {
+  background: var(--accent2-soft);
+  color: var(--accent2);
+  border: 1px solid #b8d4e8;
+}
+
+.pill-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.hbadge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  padding: 2px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.5px;
+  background: var(--bg);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+.hbadge-cm {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid #f0c0bb;
+}
+.hbadge-eng {
+  background: var(--accent2-soft);
+  color: var(--accent2);
+  border: 1px solid #b8d4e8;
+}
+
+/* =========================================================
+   HISTORY / BATCH CARDS
+========================================================= */
+.history-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.6rem;
+  transition: border-color 0.15s;
+}
+
+.history-card:hover {
+  border-color: var(--border-dark);
+}
+
+.history-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.history-ts {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.history-text {
+  font-size: 0.88rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-badges {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* =========================================================
+   EXPORT BOX
+========================================================= */
+.export-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.export-info {
+  font-size: 0.85rem;
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+
+.export-info strong {
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+/* =========================================================
+   CALLOUT
+========================================================= */
+.callout {
+  background: var(--accent2-soft);
+  border: 1px solid #b8d4e8;
+  border-left: 3px solid var(--accent2);
+  border-radius: 3px;
+  padding: 1rem 1.25rem;
+  font-size: 0.87rem;
+  color: var(--text-mid);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-style: italic;
+  border: 1px dashed var(--border);
+  border-radius: 3px;
+  background: var(--surface);
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  font-size: 0.88rem !important;
+}
+
+thead tr th {
+  background: var(--bg) !important;
+  color: var(--muted) !important;
+  font-family: var(--mono) !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  padding: 0.75rem 1rem !important;
+  border-bottom: 1px solid var(--border-dark) !important;
+  text-align: left !important;
+}
+
+tbody tr td {
+  color: var(--text) !important;
+  padding: 0.75rem 1rem !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+tbody tr:last-child td {
+  border-bottom: none !important;
+}
+tbody tr:hover td {
+  background: var(--bg) !important;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 768px) {
+  .metric-row {
+    flex-direction: column;
+  }
+  .metric-cell {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .metric-cell:last-child {
+    border-bottom: none;
+  }
+  .page-header h1 {
+    font-size: 1.8rem;
+  }
+  .token-legend {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}
