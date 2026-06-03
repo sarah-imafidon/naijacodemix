@@ -16,6 +16,11 @@ from auth import register_user, login_user
 
 def show_login_page():
 
+    # Show registration success toast if just registered
+    if st.session_state.get("register_success"):
+        st.toast("Account created successfully! Please sign in. 🎉", icon="✅")
+        st.session_state.register_success = False
+
     # ── Inject login-specific styles ─────────────────────────────────────────
     st.markdown("""
     <style>
@@ -175,15 +180,17 @@ def show_login_page():
                 if si_username.strip() and si_password:
                     success, msg, user_data = login_user(si_username, si_password)
                     if success:
-                        st.session_state.logged_in        = True
-                        st.session_state.username         = si_username.strip().lower()
-                        st.session_state.full_name        = user_data["full_name"]
+                        st.session_state.logged_in         = True
+                        st.session_state.username          = si_username.strip().lower()
+                        st.session_state.full_name         = user_data["full_name"]
                         st.session_state.show_signin_toast = True
-                        # Redirect to wherever they were trying to go
                         if "redirect_to" in st.session_state:
                             st.session_state.page = st.session_state.pop("redirect_to")
                         else:
                             st.session_state.page = "Analyze Text"
+                        # Show toast BEFORE rerun so it's visible immediately
+                        st.toast(f"Welcome back, {user_data['full_name']}! 👋", icon="✅")
+                        import time; time.sleep(1)
                         st.rerun()
                     else:
                         st.error(msg)
@@ -232,7 +239,7 @@ def show_login_page():
                 else:
                     success, msg = register_user(rg_name, rg_user, rg_pass)
                     if success:
-                        st.success(f"{msg} You can now sign in.")
+                        st.session_state.register_success = True
                         st.session_state.auth_tab = "signin"
                         st.rerun()
                     else:
