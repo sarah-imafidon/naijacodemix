@@ -32,34 +32,41 @@ BASELINE_MODEL_PATH = BASE_DIR / "baseline_afroxlm_model"
 # Download helpers
 # ----------------------------
 def _download_file(file_id: str, dest: Path):
-    """Download a single file from Google Drive using gdown."""
-    import gdown
+    """Download a single file from Google Drive using requests."""
+    import requests
     print(f"Downloading {dest.name} from Google Drive...")
-    gdown.download(
-        id=file_id,
-        output=str(dest),
-        quiet=False,
-        fuzzy=False
-    )
+
+    session = requests.Session()
+    url = "https://drive.google.com/uc"
+    params = {"id": file_id, "export": "download"}
+
+    response = session.get(url, params=params, stream=True)
+
+    # Handle large file confirmation
+    for key, value in response.cookies.items():
+        if key.startswith("download_warning"):
+            params["confirm"] = value
+            response = session.get(url, params=params, stream=True)
+            break
+
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    with open(dest, "wb") as f:
+        for chunk in response.iter_content(chunk_size=32768):
+            if chunk:
+                f.write(chunk)
+
     print(f"✅ {dest.name} downloaded.")
 
 
 def _download_folder(baseline_files: dict, dest: Path):
     """Download baseline model files individually from Google Drive."""
-    import gdown
     dest.mkdir(parents=True, exist_ok=True)
     print("Downloading baseline model files from Google Drive...")
     for filename, file_id in baseline_files.items():
         file_dest = dest / filename
         if not file_dest.exists():
             print(f"  Downloading {filename}...")
-            gdown.download(
-                id=file_id,
-                output=str(file_dest),
-                quiet=False,
-                fuzzy=False
-            )
-            print(f"  ✅ {filename} downloaded.")
+            _download_file(file_id, file_dest)
     print("✅ Baseline model folder complete.")
 
 
