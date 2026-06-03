@@ -10,7 +10,14 @@ from transformers import AutoTokenizer, AutoModel, AutoModelForSequenceClassific
 # ----------------------------
 HYBRID_MODEL_ID      = "1ZpVvoAi2qCk-XayLwSmL1R-2CFb1lDUx"
 SCALER_ID            = "1SrlSsQhaMv8IhepAfBDk9pBIMFhjRbqf"
-BASELINE_FOLDER_ID   = "1mJZhRDVpo33HbIRY-EcKHBllPBRKQp0U"
+
+# Baseline model files — individual IDs (more reliable than folder download)
+BASELINE_FILES = {
+    "config.json":            "11ComrT2PQ5q2DwpDe8HnTct4SwHlqgug",
+    "model.safetensors":      "1sdJqFiIy9hV1EFVXEXk4XICo3ZP4Eq7D",
+    "tokenizer.json":         "1s059qeEeyw6-v74ct3748U79wdp5iWkE",
+    "tokenizer_config.json":  "1IKBgujRge4KkIsAQtLPzisUC8KSBDOtJ",
+}
 
 # ----------------------------
 # Local paths (relative to project root)
@@ -37,24 +44,29 @@ def _download_file(file_id: str, dest: Path):
     print(f"✅ {dest.name} downloaded.")
 
 
-def _download_folder(folder_id: str, dest: Path):
-    """Download an entire folder from Google Drive using gdown."""
+def _download_folder(baseline_files: dict, dest: Path):
+    """Download baseline model files individually from Google Drive."""
     import gdown
-    print(f"Downloading baseline model folder from Google Drive...")
-    gdown.download_folder(
-        f"https://drive.google.com/drive/folders/{folder_id}",
-        output=str(dest),
-        quiet=False,
-        use_cookies=False
-    )
-    print(f"✅ Baseline model folder downloaded.")
+    dest.mkdir(parents=True, exist_ok=True)
+    print("Downloading baseline model files from Google Drive...")
+    for filename, file_id in baseline_files.items():
+        file_dest = dest / filename
+        if not file_dest.exists():
+            print(f"  Downloading {filename}...")
+            gdown.download(
+                id=file_id,
+                output=str(file_dest),
+                quiet=False,
+                fuzzy=False
+            )
+            print(f"  ✅ {filename} downloaded.")
+    print("✅ Baseline model folder complete.")
 
 
 def _ensure_models():
     """
     Check if model files exist locally.
     If not, download them from Google Drive.
-    Only runs downloads on Streamlit Cloud (or any machine missing the files).
     """
     if not HYBRID_MODEL_PATH.exists():
         _download_file(HYBRID_MODEL_ID, HYBRID_MODEL_PATH)
@@ -62,9 +74,12 @@ def _ensure_models():
     if not SCALER_PATH.exists():
         _download_file(SCALER_ID, SCALER_PATH)
 
-    if not BASELINE_MODEL_PATH.exists() or not any(BASELINE_MODEL_PATH.iterdir()):
-        BASELINE_MODEL_PATH.mkdir(parents=True, exist_ok=True)
-        _download_folder(BASELINE_FOLDER_ID, BASELINE_MODEL_PATH)
+    baseline_files_exist = all(
+        (BASELINE_MODEL_PATH / fname).exists()
+        for fname in BASELINE_FILES.keys()
+    )
+    if not baseline_files_exist:
+        _download_folder(BASELINE_FILES, BASELINE_MODEL_PATH)
 
 
 # ----------------------------
