@@ -46,16 +46,16 @@ function styleExpandBtn() {
     for (const sel of selectors) {
         const el = document.querySelector(sel);
         if (el) {
-            el.style.setProperty('background-color', '#c0392b', 'important');
+            el.style.setProperty('background-color', '#f7f5f0', 'important');
             el.style.setProperty('border-radius',    '0 8px 8px 0', 'important');
             el.style.setProperty('width',            '2.4rem', 'important');
             el.style.setProperty('height',           '3.2rem', 'important');
-            el.style.setProperty('border',           '2px solid rgba(247,245,240,0.4)', 'important');
+            el.style.setProperty('border',           '1px solid #ddd8cc', 'important');
             el.style.setProperty('border-left',      'none', 'important');
-            el.style.setProperty('box-shadow',       '4px 0 12px rgba(192,57,43,0.4)', 'important');
+            el.style.setProperty('box-shadow',       '2px 0 8px rgba(0,0,0,0.08)', 'important');
             const svg = el.querySelector('svg');
             if (svg) {
-                svg.style.setProperty('stroke',       '#f7f5f0', 'important');
+                svg.style.setProperty('stroke',       '#c0392b', 'important');
                 svg.style.setProperty('stroke-width', '3', 'important');
                 svg.style.setProperty('width',        '1.5rem', 'important');
                 svg.style.setProperty('height',       '1.5rem', 'important');
