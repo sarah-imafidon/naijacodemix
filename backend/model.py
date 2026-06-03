@@ -8,9 +8,9 @@ from transformers import AutoTokenizer, AutoModel, AutoModelForSequenceClassific
 # ----------------------------
 # Google Drive File IDs
 # ----------------------------
-HYBRID_MODEL_ID      = "1RD_5upvNjTCtRauVOVC-yxwmN2x8QCOD"
-SCALER_ID            = "18yc8citNOhIhrZoPerzKsAWURWV2cSJF"
-BASELINE_FOLDER_ID   = "1xIn3a6AOYM8JuGXX0Jza98hb1UzhwyrY"
+HYBRID_MODEL_ID      = "1ZpVvoAi2qCk-XayLwSmL1R-2CFb1lDUx"
+SCALER_ID            = "1SrlSsQhaMv8IhepAfBDk9pBIMFhjRbqf"
+BASELINE_FOLDER_ID   = "1mJZhRDVpo33HbIRY-EcKHBllPBRKQp0U"
 
 # ----------------------------
 # Local paths (relative to project root)
