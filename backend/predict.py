@@ -1,17 +1,31 @@
 import torch
+import sys
+from pathlib import Path
+import streamlit as st
+
+# Add project root to path
+ROOT_DIR = Path(__file__).parent.parent
+sys.path.append(str(ROOT_DIR))
+
 from backend.features import extract_features
 from backend.model import load_models
 
+
 # ----------------------------
-# Load models ONCE
+# Load models ONCE and cache
+# Prevents re-downloading on every rerun
 # ----------------------------
-tokenizer, baseline_model, hybrid_model, scaler = load_models()
+@st.cache_resource(show_spinner="⏳ Loading models, please wait...")
+def get_models():
+    return load_models()
 
 
 # ----------------------------
 # Prediction Function
 # ----------------------------
 def predict(text):
+
+    tokenizer, baseline_model, hybrid_model, scaler = get_models()
 
     # ----------------------------
     # Extract Features
