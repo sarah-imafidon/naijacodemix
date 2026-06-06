@@ -145,7 +145,7 @@ def load_models():
     # Scaler
     scaler = joblib.load(str(SCALER_PATH))
 
-    return tokenizer, baseline_model, hybrid_model, scalerimport torch
+    return tokenizer, baseline_model, hybrid_model, scaler
 import torch.nn as nn
 import joblib
 import os
