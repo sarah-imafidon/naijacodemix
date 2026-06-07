@@ -68,18 +68,26 @@ def show_analyze_page():
     with btn_col:
         run = st.button("Run Analysis")
 
-    if not run:
+    if run:
+        if not text.strip():
+            st.warning("Please enter some text before running analysis.")
+        else:
+            with st.spinner("Running inference…"):
+                result = predict(text)
+            # Store results in session state so they persist across reruns
+            st.session_state.analyze_result = result
+            st.session_state.analyze_text   = text
+
+    # Display results from session state if they exist
+    if "analyze_result" not in st.session_state:
         return
 
-    if not text.strip():
-        st.warning("Please enter some text before running analysis.")
+    # Clear results if user has changed the text
+    if st.session_state.get("analyze_text", "") != text and not run:
         return
 
-    # ======================================================
-    # RUN PREDICTION
-    # ======================================================
-    with st.spinner("Running inference…"):
-        result = predict(text)
+    result   = st.session_state.analyze_result
+    text     = st.session_state.analyze_text
 
     baseline = result["baseline"]
     hybrid   = result["hybrid"]
