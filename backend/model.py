@@ -39,8 +39,7 @@ def _download_file(file_id: str, dest: Path):
     gdown.download(
         id=file_id,
         output=str(dest),
-        quiet=False,
-        fuzzy=True
+        quiet=False
     )
     print(f"✅ {dest.name} downloaded.")
 
