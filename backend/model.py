@@ -126,7 +126,10 @@ def load_models():
     _ensure_models()
 
     # Tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(str(BASELINE_MODEL_PATH))
+    tokenizer = AutoTokenizer.from_pretrained(
+        str(BASELINE_MODEL_PATH),
+        use_fast=False
+    )
 
     # Baseline model
     baseline_model = AutoModelForSequenceClassification.from_pretrained(
